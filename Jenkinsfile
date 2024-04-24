@@ -11,5 +11,13 @@ pipeline {
                 echo 'Git Checkout Completed'
             }
         }
+        stage('SonarQube Analysis') {
+            steps {
+                withSonarQubeEnv('SonarQube') {
+                    sh '''mvn clean verify sonar:sonar -Dsonar.projectKey=cicd_assignment -Dsonar.projectName='cicd_assignment' -Dsonar.host.url=http://localhost:9000''' //port 9000 is default for sonar
+                    echo 'SonarQube Analysis Completed'
+                }
+            }
+        }
     }
 }
